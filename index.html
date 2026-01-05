@@ -4,15 +4,110 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sketch</title>
+    <title>Genuary 2025</title>
 
     <link rel="stylesheet" type="text/css" href="style.css">
 
     <script src="libraries/p5.min.js"></script>
     <script src="libraries/p5.sound.min.js"></script>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        background-color: #333;
+      }
+
+      #menuContainer {
+        text-align: center;
+        background-color: rgb(209, 208, 208);
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      body.sketch-loaded #menuContainer {
+        display: none;
+      }
+
+      #menuContainer h1 {
+        font-size: 48px;
+        margin-bottom: 30px;
+        color: #333;
+      }
+
+      .button-container {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 30px;
+      }
+
+      button {
+        padding: 15px 40px;
+        font-size: 20px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #4CAF50;
+        color: white;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      button:active {
+        background-color: #3d8b40;
+      }
+
+      #sketchContainer {
+        display: none;
+      }
+    </style>
   </head>
 
   <body>
-    <script src="01_one_color_one_shape.js"></script>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const sketchToLoad = params.get('sketch');
+      
+      if (sketchToLoad) {
+        document.body.classList.add('sketch-loaded');
+        const scriptTag = document.createElement('script');
+        scriptTag.src = sketchToLoad;
+        document.head.appendChild(scriptTag);
+      }
+    </script>
+
+    <div id="menuContainer">
+      <h1>Genuary 2026</h1>
+      <div class="button-container">
+        <button id="btn1">#1 One color, one shape</button>
+        <button id="btn2">#3 Fibonacci forever</button>
+      </div>
+    </div>
+
+    <div id="sketchContainer"></div>
+
+    <script>
+      document.getElementById('btn1').addEventListener('click', function() {
+        window.location.href = '?sketch=01_one_color_one_shape.js';
+      });
+
+      document.getElementById('btn2').addEventListener('click', function() {
+        window.location.href = '?sketch=02_fibonacci_sequence.js';
+      });
+    </script>
   </body>
 </html>
