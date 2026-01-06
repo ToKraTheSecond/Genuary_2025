@@ -103,7 +103,8 @@ function drawSquares(limit, strokeW) {
   let top = y;
   let bottom = y + w;
 
-  drawSquare(x, y, fib[0], strokeW);
+  // dir = 1 cause we need first square with specific diagonal direction
+  drawSquare(x, y, fib[0], strokeW, 1);
 
   let dir = 0;
 
@@ -128,19 +129,25 @@ function drawSquares(limit, strokeW) {
       bottom += size;
     }
 
-    drawSquare(x, y, fib[i], strokeW);
+    drawSquare(x, y, fib[i], strokeW, dir);
     dir = (dir + 1) % 4;
   }
 }
 
-function drawSquare(x, y, value, strokeW) {
+function drawSquare(x, y, value, strokeW, dir) {
   let size = value * s;
   stroke(0);
   strokeWeight(strokeW);
   noFill();
   rect(x, y, size, size);
 
-  noStroke();
-  fill(0);
-  text(value, x + size / 2, y + size / 2);
+  strokeWeight(max(1, strokeW * 1.2));
+  
+  if (dir % 2 === 0) {
+    // dir 0, 2: / diagonal (top-right to bottom-left)
+    line(x + size, y, x, y + size);
+  } else {
+    // dir 1, 3: \ diagonal (top-left to bottom-right)
+    line(x, y, x + size, y + size);
+  }
 }
